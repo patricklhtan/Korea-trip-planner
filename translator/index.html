@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Korean Translator · Seoul 2026</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
+<link rel="stylesheet" href="/static/css/style.css" />
+<style>
+  .gate-hidden { display:none !important; }
+  .password-gate {
+    position: fixed; inset: 0; z-index: 1000; display:flex; align-items:center; justify-content:center;
+    background: linear-gradient(135deg, rgba(10,17,40,.92), rgba(157,77,107,.88)); padding: 24px;
+  }
+</style>
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "background": "#fcf8fb",
+        "surface": "#fcf8fb",
+        "surface-bright": "#fcf8fb",
+        "surface-dim": "#dcd9db",
+        "surface-container-lowest": "#ffffff",
+        "surface-container-low": "#f6f3f5",
+        "surface-container": "#f0edef",
+        "surface-container-high": "#eae7ea",
+        "surface-container-highest": "#e5e2e4",
+        "on-surface": "#1b1b1d",
+        "on-surface-variant": "#46464d",
+        "outline": "#76767e",
+        "outline-variant": "#c6c6ce",
+        "primary": "#0a1128",
+        "primary-container": "#141a32",
+        "on-primary": "#ffffff",
+        "on-primary-container": "#bfc5e4",
+        "primary-fixed": "#dce1ff",
+        "primary-fixed-dim": "#bfc5e4",
+        "on-primary-fixed": "#141a32",
+        "on-primary-fixed-variant": "#3f465f",
+        "secondary": "#9d4d6b",
+        "secondary-container": "#fce7f3",
+        "on-secondary": "#ffffff",
+        "on-secondary-container": "#6e5e68",
+        "secondary-fixed": "#fce7f3",
+        "secondary-fixed-dim": "#f1c6db",
+        "on-secondary-fixed": "#231820",
+        "tertiary": "#000000",
+        "tertiary-container": "#2c1603",
+        "tertiary-fixed": "#ffdcc3",
+        "tertiary-fixed-dim": "#e8be9f",
+        "on-tertiary": "#ffffff",
+        "on-tertiary-container": "#a17d61",
+        "on-tertiary-fixed": "#2c1603",
+        "error": "#ba1a1a",
+        "error-container": "#ffdad6",
+        "on-error": "#ffffff",
+        "on-error-container": "#93000a",
+        "inverse-surface": "#303032",
+        "inverse-on-surface": "#f3f0f2",
+        "inverse-primary": "#bfc5e4"
+      },
+      borderRadius: {
+        DEFAULT: "0.25rem",
+        lg: "0.5rem",
+        xl: "0.75rem",
+        "2xl": "1rem",
+        full: "9999px"
+      },
+      spacing: {
+        "container-margin-desktop": "64px",
+        "container-margin-mobile": "20px",
+        "section-gap": "48px",
+        "gutter-md": "16px",
+        "base": "8px"
+      },
+      fontFamily: {
+        "body-md": ["Plus Jakarta Sans", "sans-serif"],
+        "headline-md": ["Plus Jakarta Sans", "sans-serif"],
+        "display-lg": ["Plus Jakarta Sans", "sans-serif"],
+        "headline-lg-mobile": ["Plus Jakarta Sans", "sans-serif"],
+        "body-lg": ["Plus Jakarta Sans", "sans-serif"],
+        "label-sm": ["Plus Jakarta Sans", "sans-serif"],
+        "headline-lg": ["Plus Jakarta Sans", "sans-serif"]
+      },
+      fontSize: {
+        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+        "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
+        "headline-lg-mobile": ["28px", { lineHeight: "36px", fontWeight: "700" }],
+        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+        "label-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "600" }],
+        "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "700" }]
+      }
+    }
+  }
+};
+</script>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen pb-32 antialiased">
+<div id="password-gate" class="password-gate">
+  <div class="w-full max-w-md rounded-3xl bg-white/95 backdrop-blur-xl shadow-2xl border border-white/30 p-7 space-y-5">
+    <div class="space-y-2 text-center">
+      <div class="mx-auto w-14 h-14 rounded-2xl bg-primary text-on-primary flex items-center justify-center">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">lock</span>
+      </div>
+      <h2 class="text-2xl font-bold text-primary">Private Trip Planner</h2>
+      <p class="text-on-surface-variant text-sm">Enter the shared password to view the Korea trip planner.</p>
+    </div>
+    <form id="password-form" class="space-y-3">
+      <input id="password-input" type="password" autocomplete="current-password" placeholder="Password" class="w-full rounded-2xl border border-outline-variant/50 px-4 py-3 text-primary bg-surface-container-low focus:outline-none focus:ring-2 focus:ring-primary/30" />
+      <button type="submit" class="w-full rounded-2xl bg-primary text-on-primary px-4 py-3 font-semibold hover:opacity-90 active:scale-[0.99] transition">Unlock planner</button>
+      <p id="password-error" class="text-sm text-error text-center min-h-[20px]"></p>
+    </form>
+  </div>
+</div>
+<div id="site-shell" class="gate-hidden">
+
+
+<header class="fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-container-margin-mobile bg-surface/80 backdrop-blur-xl border-b border-white/20 shadow-sm">
+  <div class="flex items-center gap-3">
+    <a href="/" class="flex items-center gap-3 active:scale-95 transition-transform">
+      <div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-on-primary">
+        <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">flight</span>
+      </div>
+      <h1 class="font-display-lg text-headline-md tracking-tight text-primary uppercase">Seoul 2026</h1>
+    </a>
+  </div>
+  <div class="flex items-center gap-2">
+    <a href="/tips" class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container-high active:scale-95 transition" title="Travel Tips">
+      <span class="material-symbols-outlined">tips_and_updates</span>
+    </a>
+    <a href="/translator" class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container-high active:scale-95 transition" title="Korean Translator">
+      <span class="material-symbols-outlined">translate</span>
+    </a>
+  </div>
+</header>
+
+<main class="pt-20 px-container-margin-mobile max-w-7xl mx-auto pb-16 space-y-10">
+  
+<section class="fade-in">
+  <p class="font-label-sm uppercase tracking-widest text-secondary mb-2">Quick phrases</p>
+  <h1 class="font-display-lg text-headline-lg-mobile md:text-display-lg text-primary mb-2">Korean Translator</h1>
+  <p class="font-body-lg text-on-surface-variant max-w-2xl">Tap the speaker to hear it. Copy to send straight to a Korean speaker.</p>
+</section>
+
+<section>
+  <div class="relative max-w-xl">
+    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+    <input id="phrase-search" type="text" placeholder="Search phrases (English or Korean)…" class="w-full bg-surface-container-low border border-outline-variant/40 rounded-full pl-12 pr-4 py-3 font-body-md text-primary focus:outline-none focus:ring-2 focus:ring-primary/40" />
+  </div>
+</section>
+
+<section class="space-y-8">
+  
+  <div data-category class="fade-in">
+    <header class="flex items-center gap-3 mb-4">
+      <div class="w-10 h-10 rounded-xl bg-primary text-on-primary flex items-center justify-center">
+        <span class="material-symbols-outlined text-[20px]">waving_hand</span>
+      </div>
+      <h2 class="font-headline-md text-headline-md text-primary">Essentials</h2>
+    </header>
+    <div class="space-y-3">
+      
+      <article data-phrase="Hello 안녕하세요 annyeong-haseyo" class="bg-surface-container-low rounded-2xl p-5 border border-outline-variant/40 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+        <div class="md:col-span-4">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">English</p>
+          <p class="font-body-lg text-primary font-semibold">Hello</p>
+        </div>
+        <div class="md:col-span-5">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">Korean</p>
+          <p class="font-headline-md text-xl text-primary korean-text">안녕하세요</p>
+          <p class="font-body-md text-on-surface-variant italic">annyeong-haseyo</p>
+        </div>
+        <div class="md:col-span-3 flex gap-2 justify-end">
+          <button onclick="speak('안녕하세요')" class="w-11 h-11 rounded-full bg-secondary-container text-primary hover:bg-secondary-fixed-dim active:scale-95 transition flex items-center justify-center" title="Speak">
+            <span class="material-symbols-outlined">volume_up</span>
+          </button>
+          <button onclick="copyText(this, '안녕하세요')" class="w-11 h-11 rounded-full bg-primary text-on-primary hover:bg-primary-container active:scale-95 transition flex items-center justify-center" title="Copy">
+            <span class="material-symbols-outlined">content_copy</span>
+          </button>
+        </div>
+      </article>
+      
+      <article data-phrase="Thank you 감사합니다 gam-sa-ham-ni-da" class="bg-surface-container-low rounded-2xl p-5 border border-outline-variant/40 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+        <div class="md:col-span-4">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">English</p>
+          <p class="font-body-lg text-primary font-semibold">Thank you</p>
+        </div>
+        <div class="md:col-span-5">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">Korean</p>
+          <p class="font-headline-md text-xl text-primary korean-text">감사합니다</p>
+          <p class="font-body-md text-on-surface-variant italic">gam-sa-ham-ni-da</p>
+        </div>
+        <div class="md:col-span-3 flex gap-2 justify-end">
+          <button onclick="speak('감사합니다')" class="w-11 h-11 rounded-full bg-secondary-container text-primary hover:bg-secondary-fixed-dim active:scale-95 transition flex items-center justify-center" title="Speak">
+            <span class="material-symbols-outlined">volume_up</span>
+          </button>
+          <button onclick="copyText(this, '감사합니다')" class="w-11 h-11 rounded-full bg-primary text-on-primary hover:bg-primary-container active:scale-95 transition flex items-center justify-center" title="Copy">
+            <span class="material-symbols-outlined">content_copy</span>
+          </button>
+        </div>
+      </article>
+      
+      <article data-phrase="Excuse me 저기요 jeo-gi-yo" class="bg-surface-container-low rounded-2xl p-5 border border-outline-variant/40 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+        <div class="md:col-span-4">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">English</p>
+          <p class="font-body-lg text-primary font-semibold">Excuse me</p>
+        </div>
+        <div class="md:col-span-5">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">Korean</p>
+          <p class="font-headline-md text-xl text-primary korean-text">저기요</p>
+          <p class="font-body-md text-on-surface-variant italic">jeo-gi-yo</p>
+        </div>
+        <div class="md:col-span-3 flex gap-2 justify-end">
+          <button onclick="speak('저기요')" class="w-11 h-11 rounded-full bg-secondary-container text-primary hover:bg-secondary-fixed-dim active:scale-95 transition flex items-center justify-center" title="Speak">
+            <span class="material-symbols-outlined">volume_up</span>
+          </button>
+          <button onclick="copyText(this, '저기요')" class="w-11 h-11 rounded-full bg-primary text-on-primary hover:bg-primary-container active:scale-95 transition flex items-center justify-center" title="Copy">
+            <span class="material-symbols-outlined">content_copy</span>
+          </button>
+        </div>
+      </article>
+      
+      <article data-phrase="Please give me… …주세요 …ju-se-yo" class="bg-surface-container-low rounded-2xl p-5 border border-outline-variant/40 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+        <div class="md:col-span-4">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">English</p>
+          <p class="font-body-lg text-primary font-semibold">Please give me…</p>
+        </div>
+        <div class="md:col-span-5">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">Korean</p>
+          <p class="font-headline-md text-xl text-primary korean-text">…주세요</p>
+          <p class="font-body-md text-on-surface-variant italic">…ju-se-yo</p>
+        </div>
+        <div class="md:col-span-3 flex gap-2 justify-end">
+          <button onclick="speak('…주세요')" class="w-11 h-11 rounded-full bg-secondary-container text-primary hover:bg-secondary-fixed-dim active:scale-95 transition flex items-center justify-center" title="Speak">
+            <span class="material-symbols-outlined">volume_up</span>
+          </button>
+          <button onclick="copyText(this, '…주세요')" class="w-11 h-11 rounded-full bg-primary text-on-primary hover:bg-primary-container active:scale-95 transition flex items-center justify-center" title="Copy">
+            <span class="material-symbols-outlined">content_copy</span>
+          </button>
+        </div>
+      </article>
+      
+      <article data-phrase="How much? 얼마예요? eol-ma-ye-yo" class="bg-surface-container-low rounded-2xl p-5 border border-outline-variant/40 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+        <div class="md:col-span-4">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">English</p>
+          <p class="font-body-lg text-primary font-semibold">How much?</p>
+        </div>
+        <div class="md:col-span-5">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">Korean</p>
+          <p class="font-headline-md text-xl text-primary korean-text">얼마예요?</p>
+          <p class="font-body-md text-on-surface-variant italic">eol-ma-ye-yo</p>
+        </div>
+        <div class="md:col-span-3 flex gap-2 justify-end">
+          <button onclick="speak('얼마예요?')" class="w-11 h-11 rounded-full bg-secondary-container text-primary hover:bg-secondary-fixed-dim active:scale-95 transition flex items-center justify-center" title="Speak">
+            <span class="material-symbols-outlined">volume_up</span>
+          </button>
+          <button onclick="copyText(this, '얼마예요?')" class="w-11 h-11 rounded-full bg-primary text-on-primary hover:bg-primary-container active:scale-95 transition flex items-center justify-center" title="Copy">
+            <span class="material-symbols-outlined">content_copy</span>
+          </button>
+        </div>
+      </article>
+      
+    </div>
+  </div>
+  
+  <div data-category class="fade-in">
+    <header class="flex items-center gap-3 mb-4">
+      <div class="w-10 h-10 rounded-xl bg-primary text-on-primary flex items-center justify-center">
+        <span class="material-symbols-outlined text-[20px]">restaurant</span>
+      </div>
+      <h2 class="font-headline-md text-headline-md text-primary">Dining</h2>
+    </header>
+    <div class="space-y-3">
+      
+      <article data-phrase="Spicy 매워요 mae-wo-yo" class="bg-surface-container-low rounded-2xl p-5 border border-outline-variant/40 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+        <div class="md:col-span-4">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">English</p>
+          <p class="font-body-lg text-primary font-semibold">Spicy</p>
+        </div>
+        <div class="md:col-span-5">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">Korean</p>
+          <p class="font-headline-md text-xl text-primary korean-text">매워요</p>
+          <p class="font-body-md text-on-surface-variant italic">mae-wo-yo</p>
+        </div>
+        <div class="md:col-span-3 flex gap-2 justify-end">
+          <button onclick="speak('매워요')" class="w-11 h-11 rounded-full bg-secondary-container text-primary hover:bg-secondary-fixed-dim active:scale-95 transition flex items-center justify-center" title="Speak">
+            <span class="material-symbols-outlined">volume_up</span>
+          </button>
+          <button onclick="copyText(this, '매워요')" class="w-11 h-11 rounded-full bg-primary text-on-primary hover:bg-primary-container active:scale-95 transition flex items-center justify-center" title="Copy">
+            <span class="material-symbols-outlined">content_copy</span>
+          </button>
+        </div>
+      </article>
+      
+      <article data-phrase="Not spicy please 안 맵게 해주세요 an maep-ge hae-ju-se-yo" class="bg-surface-container-low rounded-2xl p-5 border border-outline-variant/40 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+        <div class="md:col-span-4">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">English</p>
+          <p class="font-body-lg text-primary font-semibold">Not spicy please</p>
+        </div>
+        <div class="md:col-span-5">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">Korean</p>
+          <p class="font-headline-md text-xl text-primary korean-text">안 맵게 해주세요</p>
+          <p class="font-body-md text-on-surface-variant italic">an maep-ge hae-ju-se-yo</p>
+        </div>
+        <div class="md:col-span-3 flex gap-2 justify-end">
+          <button onclick="speak('안 맵게 해주세요')" class="w-11 h-11 rounded-full bg-secondary-container text-primary hover:bg-secondary-fixed-dim active:scale-95 transition flex items-center justify-center" title="Speak">
+            <span class="material-symbols-outlined">volume_up</span>
+          </button>
+          <button onclick="copyText(this, '안 맵게 해주세요')" class="w-11 h-11 rounded-full bg-primary text-on-primary hover:bg-primary-container active:scale-95 transition flex items-center justify-center" title="Copy">
+            <span class="material-symbols-outlined">content_copy</span>
+          </button>
+        </div>
+      </article>
+      
+      <article data-phrase="Delicious! 맛있어요! ma-si-sseo-yo" class="bg-surface-container-low rounded-2xl p-5 border border-outline-variant/40 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+        <div class="md:col-span-4">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">English</p>
+          <p class="font-body-lg text-primary font-semibold">Delicious!</p>
+        </div>
+        <div class="md:col-span-5">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">Korean</p>
+          <p class="font-headline-md text-xl text-primary korean-text">맛있어요!</p>
+          <p class="font-body-md text-on-surface-variant italic">ma-si-sseo-yo</p>
+        </div>
+        <div class="md:col-span-3 flex gap-2 justify-end">
+          <button onclick="speak('맛있어요!')" class="w-11 h-11 rounded-full bg-secondary-container text-primary hover:bg-secondary-fixed-dim active:scale-95 transition flex items-center justify-center" title="Speak">
+            <span class="material-symbols-outlined">volume_up</span>
+          </button>
+          <button onclick="copyText(this, '맛있어요!')" class="w-11 h-11 rounded-full bg-primary text-on-primary hover:bg-primary-container active:scale-95 transition flex items-center justify-center" title="Copy">
+            <span class="material-symbols-outlined">content_copy</span>
+          </button>
+        </div>
+      </article>
+      
+      <article data-phrase="Check please 계산해 주세요 gye-san-hae ju-se-yo" class="bg-surface-container-low rounded-2xl p-5 border border-outline-variant/40 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+        <div class="md:col-span-4">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">English</p>
+          <p class="font-body-lg text-primary font-semibold">Check please</p>
+        </div>
+        <div class="md:col-span-5">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">Korean</p>
+          <p class="font-headline-md text-xl text-primary korean-text">계산해 주세요</p>
+          <p class="font-body-md text-on-surface-variant italic">gye-san-hae ju-se-yo</p>
+        </div>
+        <div class="md:col-span-3 flex gap-2 justify-end">
+          <button onclick="speak('계산해 주세요')" class="w-11 h-11 rounded-full bg-secondary-container text-primary hover:bg-secondary-fixed-dim active:scale-95 transition flex items-center justify-center" title="Speak">
+            <span class="material-symbols-outlined">volume_up</span>
+          </button>
+          <button onclick="copyText(this, '계산해 주세요')" class="w-11 h-11 rounded-full bg-primary text-on-primary hover:bg-primary-container active:scale-95 transition flex items-center justify-center" title="Copy">
+            <span class="material-symbols-outlined">content_copy</span>
+          </button>
+        </div>
+      </article>
+      
+      <article data-phrase="Water please 물 좀 주세요 mul jom ju-se-yo" class="bg-surface-container-low rounded-2xl p-5 border border-outline-variant/40 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+        <div class="md:col-span-4">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">English</p>
+          <p class="font-body-lg text-primary font-semibold">Water please</p>
+        </div>
+        <div class="md:col-span-5">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">Korean</p>
+          <p class="font-headline-md text-xl text-primary korean-text">물 좀 주세요</p>
+          <p class="font-body-md text-on-surface-variant italic">mul jom ju-se-yo</p>
+        </div>
+        <div class="md:col-span-3 flex gap-2 justify-end">
+          <button onclick="speak('물 좀 주세요')" class="w-11 h-11 rounded-full bg-secondary-container text-primary hover:bg-secondary-fixed-dim active:scale-95 transition flex items-center justify-center" title="Speak">
+            <span class="material-symbols-outlined">volume_up</span>
+          </button>
+          <button onclick="copyText(this, '물 좀 주세요')" class="w-11 h-11 rounded-full bg-primary text-on-primary hover:bg-primary-container active:scale-95 transition flex items-center justify-center" title="Copy">
+            <span class="material-symbols-outlined">content_copy</span>
+          </button>
+        </div>
+      </article>
+      
+    </div>
+  </div>
+  
+  <div data-category class="fade-in">
+    <header class="flex items-center gap-3 mb-4">
+      <div class="w-10 h-10 rounded-xl bg-primary text-on-primary flex items-center justify-center">
+        <span class="material-symbols-outlined text-[20px]">directions</span>
+      </div>
+      <h2 class="font-headline-md text-headline-md text-primary">Getting Around</h2>
+    </header>
+    <div class="space-y-3">
+      
+      <article data-phrase="Where is …? …어디예요? eo-di-ye-yo" class="bg-surface-container-low rounded-2xl p-5 border border-outline-variant/40 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+        <div class="md:col-span-4">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">English</p>
+          <p class="font-body-lg text-primary font-semibold">Where is …?</p>
+        </div>
+        <div class="md:col-span-5">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">Korean</p>
+          <p class="font-headline-md text-xl text-primary korean-text">…어디예요?</p>
+          <p class="font-body-md text-on-surface-variant italic">eo-di-ye-yo</p>
+        </div>
+        <div class="md:col-span-3 flex gap-2 justify-end">
+          <button onclick="speak('…어디예요?')" class="w-11 h-11 rounded-full bg-secondary-container text-primary hover:bg-secondary-fixed-dim active:scale-95 transition flex items-center justify-center" title="Speak">
+            <span class="material-symbols-outlined">volume_up</span>
+          </button>
+          <button onclick="copyText(this, '…어디예요?')" class="w-11 h-11 rounded-full bg-primary text-on-primary hover:bg-primary-container active:scale-95 transition flex items-center justify-center" title="Copy">
+            <span class="material-symbols-outlined">content_copy</span>
+          </button>
+        </div>
+      </article>
+      
+      <article data-phrase="Wifi password? 와이파이 비밀번호? wai-pai bi-mil-beon-ho" class="bg-surface-container-low rounded-2xl p-5 border border-outline-variant/40 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+        <div class="md:col-span-4">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">English</p>
+          <p class="font-body-lg text-primary font-semibold">Wifi password?</p>
+        </div>
+        <div class="md:col-span-5">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">Korean</p>
+          <p class="font-headline-md text-xl text-primary korean-text">와이파이 비밀번호?</p>
+          <p class="font-body-md text-on-surface-variant italic">wai-pai bi-mil-beon-ho</p>
+        </div>
+        <div class="md:col-span-3 flex gap-2 justify-end">
+          <button onclick="speak('와이파이 비밀번호?')" class="w-11 h-11 rounded-full bg-secondary-container text-primary hover:bg-secondary-fixed-dim active:scale-95 transition flex items-center justify-center" title="Speak">
+            <span class="material-symbols-outlined">volume_up</span>
+          </button>
+          <button onclick="copyText(this, '와이파이 비밀번호?')" class="w-11 h-11 rounded-full bg-primary text-on-primary hover:bg-primary-container active:scale-95 transition flex items-center justify-center" title="Copy">
+            <span class="material-symbols-outlined">content_copy</span>
+          </button>
+        </div>
+      </article>
+      
+      <article data-phrase="Bathroom? 화장실 어디예요? hwa-jang-sil eo-di-ye-yo" class="bg-surface-container-low rounded-2xl p-5 border border-outline-variant/40 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+        <div class="md:col-span-4">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">English</p>
+          <p class="font-body-lg text-primary font-semibold">Bathroom?</p>
+        </div>
+        <div class="md:col-span-5">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">Korean</p>
+          <p class="font-headline-md text-xl text-primary korean-text">화장실 어디예요?</p>
+          <p class="font-body-md text-on-surface-variant italic">hwa-jang-sil eo-di-ye-yo</p>
+        </div>
+        <div class="md:col-span-3 flex gap-2 justify-end">
+          <button onclick="speak('화장실 어디예요?')" class="w-11 h-11 rounded-full bg-secondary-container text-primary hover:bg-secondary-fixed-dim active:scale-95 transition flex items-center justify-center" title="Speak">
+            <span class="material-symbols-outlined">volume_up</span>
+          </button>
+          <button onclick="copyText(this, '화장실 어디예요?')" class="w-11 h-11 rounded-full bg-primary text-on-primary hover:bg-primary-container active:scale-95 transition flex items-center justify-center" title="Copy">
+            <span class="material-symbols-outlined">content_copy</span>
+          </button>
+        </div>
+      </article>
+      
+    </div>
+  </div>
+  
+  <div data-category class="fade-in">
+    <header class="flex items-center gap-3 mb-4">
+      <div class="w-10 h-10 rounded-xl bg-primary text-on-primary flex items-center justify-center">
+        <span class="material-symbols-outlined text-[20px]">favorite</span>
+      </div>
+      <h2 class="font-headline-md text-headline-md text-primary">Polite</h2>
+    </header>
+    <div class="space-y-3">
+      
+      <article data-phrase="Thank you 감사합니다 gam-sa-ham-ni-da" class="bg-surface-container-low rounded-2xl p-5 border border-outline-variant/40 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+        <div class="md:col-span-4">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">English</p>
+          <p class="font-body-lg text-primary font-semibold">Thank you</p>
+        </div>
+        <div class="md:col-span-5">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">Korean</p>
+          <p class="font-headline-md text-xl text-primary korean-text">감사합니다</p>
+          <p class="font-body-md text-on-surface-variant italic">gam-sa-ham-ni-da</p>
+        </div>
+        <div class="md:col-span-3 flex gap-2 justify-end">
+          <button onclick="speak('감사합니다')" class="w-11 h-11 rounded-full bg-secondary-container text-primary hover:bg-secondary-fixed-dim active:scale-95 transition flex items-center justify-center" title="Speak">
+            <span class="material-symbols-outlined">volume_up</span>
+          </button>
+          <button onclick="copyText(this, '감사합니다')" class="w-11 h-11 rounded-full bg-primary text-on-primary hover:bg-primary-container active:scale-95 transition flex items-center justify-center" title="Copy">
+            <span class="material-symbols-outlined">content_copy</span>
+          </button>
+        </div>
+      </article>
+      
+      <article data-phrase="I&#39;m sorry 죄송합니다 joe-song-ham-ni-da" class="bg-surface-container-low rounded-2xl p-5 border border-outline-variant/40 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+        <div class="md:col-span-4">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">English</p>
+          <p class="font-body-lg text-primary font-semibold">I&#39;m sorry</p>
+        </div>
+        <div class="md:col-span-5">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">Korean</p>
+          <p class="font-headline-md text-xl text-primary korean-text">죄송합니다</p>
+          <p class="font-body-md text-on-surface-variant italic">joe-song-ham-ni-da</p>
+        </div>
+        <div class="md:col-span-3 flex gap-2 justify-end">
+          <button onclick="speak('죄송합니다')" class="w-11 h-11 rounded-full bg-secondary-container text-primary hover:bg-secondary-fixed-dim active:scale-95 transition flex items-center justify-center" title="Speak">
+            <span class="material-symbols-outlined">volume_up</span>
+          </button>
+          <button onclick="copyText(this, '죄송합니다')" class="w-11 h-11 rounded-full bg-primary text-on-primary hover:bg-primary-container active:scale-95 transition flex items-center justify-center" title="Copy">
+            <span class="material-symbols-outlined">content_copy</span>
+          </button>
+        </div>
+      </article>
+      
+      <article data-phrase="Yes 네 ne" class="bg-surface-container-low rounded-2xl p-5 border border-outline-variant/40 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+        <div class="md:col-span-4">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">English</p>
+          <p class="font-body-lg text-primary font-semibold">Yes</p>
+        </div>
+        <div class="md:col-span-5">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">Korean</p>
+          <p class="font-headline-md text-xl text-primary korean-text">네</p>
+          <p class="font-body-md text-on-surface-variant italic">ne</p>
+        </div>
+        <div class="md:col-span-3 flex gap-2 justify-end">
+          <button onclick="speak('네')" class="w-11 h-11 rounded-full bg-secondary-container text-primary hover:bg-secondary-fixed-dim active:scale-95 transition flex items-center justify-center" title="Speak">
+            <span class="material-symbols-outlined">volume_up</span>
+          </button>
+          <button onclick="copyText(this, '네')" class="w-11 h-11 rounded-full bg-primary text-on-primary hover:bg-primary-container active:scale-95 transition flex items-center justify-center" title="Copy">
+            <span class="material-symbols-outlined">content_copy</span>
+          </button>
+        </div>
+      </article>
+      
+      <article data-phrase="No 아니요 a-ni-yo" class="bg-surface-container-low rounded-2xl p-5 border border-outline-variant/40 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+        <div class="md:col-span-4">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">English</p>
+          <p class="font-body-lg text-primary font-semibold">No</p>
+        </div>
+        <div class="md:col-span-5">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">Korean</p>
+          <p class="font-headline-md text-xl text-primary korean-text">아니요</p>
+          <p class="font-body-md text-on-surface-variant italic">a-ni-yo</p>
+        </div>
+        <div class="md:col-span-3 flex gap-2 justify-end">
+          <button onclick="speak('아니요')" class="w-11 h-11 rounded-full bg-secondary-container text-primary hover:bg-secondary-fixed-dim active:scale-95 transition flex items-center justify-center" title="Speak">
+            <span class="material-symbols-outlined">volume_up</span>
+          </button>
+          <button onclick="copyText(this, '아니요')" class="w-11 h-11 rounded-full bg-primary text-on-primary hover:bg-primary-container active:scale-95 transition flex items-center justify-center" title="Copy">
+            <span class="material-symbols-outlined">content_copy</span>
+          </button>
+        </div>
+      </article>
+      
+      <article data-phrase="Goodbye (staying) 안녕히 가세요 annyeong-hi ga-se-yo" class="bg-surface-container-low rounded-2xl p-5 border border-outline-variant/40 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+        <div class="md:col-span-4">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">English</p>
+          <p class="font-body-lg text-primary font-semibold">Goodbye (staying)</p>
+        </div>
+        <div class="md:col-span-5">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">Korean</p>
+          <p class="font-headline-md text-xl text-primary korean-text">안녕히 가세요</p>
+          <p class="font-body-md text-on-surface-variant italic">annyeong-hi ga-se-yo</p>
+        </div>
+        <div class="md:col-span-3 flex gap-2 justify-end">
+          <button onclick="speak('안녕히 가세요')" class="w-11 h-11 rounded-full bg-secondary-container text-primary hover:bg-secondary-fixed-dim active:scale-95 transition flex items-center justify-center" title="Speak">
+            <span class="material-symbols-outlined">volume_up</span>
+          </button>
+          <button onclick="copyText(this, '안녕히 가세요')" class="w-11 h-11 rounded-full bg-primary text-on-primary hover:bg-primary-container active:scale-95 transition flex items-center justify-center" title="Copy">
+            <span class="material-symbols-outlined">content_copy</span>
+          </button>
+        </div>
+      </article>
+      
+      <article data-phrase="Goodbye (leaving) 안녕히 계세요 annyeong-hi gye-se-yo" class="bg-surface-container-low rounded-2xl p-5 border border-outline-variant/40 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+        <div class="md:col-span-4">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">English</p>
+          <p class="font-body-lg text-primary font-semibold">Goodbye (leaving)</p>
+        </div>
+        <div class="md:col-span-5">
+          <p class="font-label-sm uppercase tracking-wider text-on-surface-variant">Korean</p>
+          <p class="font-headline-md text-xl text-primary korean-text">안녕히 계세요</p>
+          <p class="font-body-md text-on-surface-variant italic">annyeong-hi gye-se-yo</p>
+        </div>
+        <div class="md:col-span-3 flex gap-2 justify-end">
+          <button onclick="speak('안녕히 계세요')" class="w-11 h-11 rounded-full bg-secondary-container text-primary hover:bg-secondary-fixed-dim active:scale-95 transition flex items-center justify-center" title="Speak">
+            <span class="material-symbols-outlined">volume_up</span>
+          </button>
+          <button onclick="copyText(this, '안녕히 계세요')" class="w-11 h-11 rounded-full bg-primary text-on-primary hover:bg-primary-container active:scale-95 transition flex items-center justify-center" title="Copy">
+            <span class="material-symbols-outlined">content_copy</span>
+          </button>
+        </div>
+      </article>
+      
+    </div>
+  </div>
+  
+</section>
+
+</main>
+
+<nav class="fixed bottom-0 left-0 right-0 z-50 flex justify-around items-center px-3 py-2 bg-surface/85 backdrop-blur-xl border-t border-white/20 shadow-[0_-4px_20px_0_rgba(10,17,40,0.06)] rounded-t-2xl">
+  
+    
+    <a href="/" class="flex flex-col items-center justify-center min-w-[56px] py-2 px-3 rounded-full transition-all duration-200
+              text-on-surface-variant hover:text-primary active:scale-90">
+      <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 0;">home</span>
+      <span class="text-[11px] font-semibold tracking-wide mt-0.5">Home</span>
+    </a>
+  
+    
+    <a href="/itinerary" class="flex flex-col items-center justify-center min-w-[56px] py-2 px-3 rounded-full transition-all duration-200
+              text-on-surface-variant hover:text-primary active:scale-90">
+      <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 0;">event_note</span>
+      <span class="text-[11px] font-semibold tracking-wide mt-0.5">Itinerary</span>
+    </a>
+  
+    
+    <a href="/flights" class="flex flex-col items-center justify-center min-w-[56px] py-2 px-3 rounded-full transition-all duration-200
+              text-on-surface-variant hover:text-primary active:scale-90">
+      <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 0;">flight_takeoff</span>
+      <span class="text-[11px] font-semibold tracking-wide mt-0.5">Flights</span>
+    </a>
+  
+    
+    <a href="/hotels" class="flex flex-col items-center justify-center min-w-[56px] py-2 px-3 rounded-full transition-all duration-200
+              text-on-surface-variant hover:text-primary active:scale-90">
+      <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 0;">hotel</span>
+      <span class="text-[11px] font-semibold tracking-wide mt-0.5">Hotel</span>
+    </a>
+  
+    
+    <a href="/discover" class="flex flex-col items-center justify-center min-w-[56px] py-2 px-3 rounded-full transition-all duration-200
+              text-on-surface-variant hover:text-primary active:scale-90">
+      <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 0;">explore</span>
+      <span class="text-[11px] font-semibold tracking-wide mt-0.5">Discover</span>
+    </a>
+  
+</nav>
+
+</div>
+<script>window.KOREA_TRIP_GATE={password:"54321pat",storageKey:"korea_trip_gate_ok_v1"};</script>
+<script src="/static/js/app.js"></script>
+
+<script>
+function speak(text) {
+  if (!('speechSynthesis' in window)) return;
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'ko-KR';
+  u.rate = 0.9;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(u);
+}
+function copyText(btn, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    const original = btn.innerHTML;
+    btn.innerHTML = '<span class="material-symbols-outlined">check</span>';
+    setTimeout(() => { btn.innerHTML = original; }, 1200);
+  });
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Discover Korea · Seoul 2026</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
+<link rel="stylesheet" href="/static/css/style.css" />
+<style>
+  .gate-hidden { display:none !important; }
+  .password-gate {
+    position: fixed; inset: 0; z-index: 1000; display:flex; align-items:center; justify-content:center;
+    background: linear-gradient(135deg, rgba(10,17,40,.92), rgba(157,77,107,.88)); padding: 24px;
+  }
+</style>
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "background": "#fcf8fb",
+        "surface": "#fcf8fb",
+        "surface-bright": "#fcf8fb",
+        "surface-dim": "#dcd9db",
+        "surface-container-lowest": "#ffffff",
+        "surface-container-low": "#f6f3f5",
+        "surface-container": "#f0edef",
+        "surface-container-high": "#eae7ea",
+        "surface-container-highest": "#e5e2e4",
+        "on-surface": "#1b1b1d",
+        "on-surface-variant": "#46464d",
+        "outline": "#76767e",
+        "outline-variant": "#c6c6ce",
+        "primary": "#0a1128",
+        "primary-container": "#141a32",
+        "on-primary": "#ffffff",
+        "on-primary-container": "#bfc5e4",
+        "primary-fixed": "#dce1ff",
+        "primary-fixed-dim": "#bfc5e4",
+        "on-primary-fixed": "#141a32",
+        "on-primary-fixed-variant": "#3f465f",
+        "secondary": "#9d4d6b",
+        "secondary-container": "#fce7f3",
+        "on-secondary": "#ffffff",
+        "on-secondary-container": "#6e5e68",
+        "secondary-fixed": "#fce7f3",
+        "secondary-fixed-dim": "#f1c6db",
+        "on-secondary-fixed": "#231820",
+        "tertiary": "#000000",
+        "tertiary-container": "#2c1603",
+        "tertiary-fixed": "#ffdcc3",
+        "tertiary-fixed-dim": "#e8be9f",
+        "on-tertiary": "#ffffff",
+        "on-tertiary-container": "#a17d61",
+        "on-tertiary-fixed": "#2c1603",
+        "error": "#ba1a1a",
+        "error-container": "#ffdad6",
+        "on-error": "#ffffff",
+        "on-error-container": "#93000a",
+        "inverse-surface": "#303032",
+        "inverse-on-surface": "#f3f0f2",
+        "inverse-primary": "#bfc5e4"
+      },
+      borderRadius: {
+        DEFAULT: "0.25rem",
+        lg: "0.5rem",
+        xl: "0.75rem",
+        "2xl": "1rem",
+        full: "9999px"
+      },
+      spacing: {
+        "container-margin-desktop": "64px",
+        "container-margin-mobile": "20px",
+        "section-gap": "48px",
+        "gutter-md": "16px",
+        "base": "8px"
+      },
+      fontFamily: {
+        "body-md": ["Plus Jakarta Sans", "sans-serif"],
+        "headline-md": ["Plus Jakarta Sans", "sans-serif"],
+        "display-lg": ["Plus Jakarta Sans", "sans-serif"],
+        "headline-lg-mobile": ["Plus Jakarta Sans", "sans-serif"],
+        "body-lg": ["Plus Jakarta Sans", "sans-serif"],
+        "label-sm": ["Plus Jakarta Sans", "sans-serif"],
+        "headline-lg": ["Plus Jakarta Sans", "sans-serif"]
+      },
+      fontSize: {
+        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+        "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
+        "headline-lg-mobile": ["28px", { lineHeight: "36px", fontWeight: "700" }],
+        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+        "label-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "600" }],
+        "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "700" }]
+      }
+    }
+  }
+};
+</script>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen pb-32 antialiased">
+<div id="password-gate" class="password-gate">
+  <div class="w-full max-w-md rounded-3xl bg-white/95 backdrop-blur-xl shadow-2xl border border-white/30 p-7 space-y-5">
+    <div class="space-y-2 text-center">
+      <div class="mx-auto w-14 h-14 rounded-2xl bg-primary text-on-primary flex items-center justify-center">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">lock</span>
+      </div>
+      <h2 class="text-2xl font-bold text-primary">Private Trip Planner</h2>
+      <p class="text-on-surface-variant text-sm">Enter the shared password to view the Korea trip planner.</p>
+    </div>
+    <form id="password-form" class="space-y-3">
+      <input id="password-input" type="password" autocomplete="current-password" placeholder="Password" class="w-full rounded-2xl border border-outline-variant/50 px-4 py-3 text-primary bg-surface-container-low focus:outline-none focus:ring-2 focus:ring-primary/30" />
+      <button type="submit" class="w-full rounded-2xl bg-primary text-on-primary px-4 py-3 font-semibold hover:opacity-90 active:scale-[0.99] transition">Unlock planner</button>
+      <p id="password-error" class="text-sm text-error text-center min-h-[20px]"></p>
+    </form>
+  </div>
+</div>
+<div id="site-shell" class="gate-hidden">
+
+
+<header class="fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-container-margin-mobile bg-surface/80 backdrop-blur-xl border-b border-white/20 shadow-sm">
+  <div class="flex items-center gap-3">
+    <a href="/" class="flex items-center gap-3 active:scale-95 transition-transform">
+      <div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-on-primary">
+        <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">flight</span>
+      </div>
+      <h1 class="font-display-lg text-headline-md tracking-tight text-primary uppercase">Seoul 2026</h1>
+    </a>
+  </div>
+  <div class="flex items-center gap-2">
+    <a href="/tips" class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container-high active:scale-95 transition" title="Travel Tips">
+      <span class="material-symbols-outlined">tips_and_updates</span>
+    </a>
+    <a href="/translator" class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container-high active:scale-95 transition" title="Korean Translator">
+      <span class="material-symbols-outlined">translate</span>
+    </a>
+  </div>
+</header>
+
+<main class="pt-20 px-container-margin-mobile max-w-7xl mx-auto pb-16 space-y-10">
+  
+<section class="fade-in">
+  <p class="font-label-sm uppercase tracking-widest text-secondary mb-2">Sights · Culture · Food</p>
+  <h1 class="font-display-lg text-headline-lg-mobile md:text-display-lg text-primary mb-2">Discover Korea</h1>
+  <p class="font-body-lg text-on-surface-variant max-w-2xl">A curated shortlist of unmissable Seoul moments, plus a few neighborhood deep-dives.</p>
+</section>
+
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-gutter-md">
+  
+  <article class="group bg-surface-container-low rounded-2xl overflow-hidden border border-outline-variant/40 shadow-sm hover:shadow-md transition fade-in">
+    <div class="relative h-48 overflow-hidden">
+      <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="/static/images/gyeongbokgung.jpg" alt="Gyeongbokgung Palace" />
+      <span class="absolute top-3 left-3 bg-surface/85 backdrop-blur-md text-primary text-xs font-semibold px-3 py-1 rounded-full">Historic site</span>
+    </div>
+    <div class="p-5">
+      <h3 class="font-headline-md text-lg text-primary mb-1">Gyeongbokgung Palace</h3>
+      <p class="font-body-md text-on-surface-variant text-sm mb-3">Joseon-era main royal palace — catch the changing of the guard ceremony at 10:00 and 14:00.</p>
+      <div class="flex flex-wrap gap-2">
+        
+        <span class="text-[11px] uppercase tracking-wide text-secondary bg-secondary-container px-2 py-1 rounded-full font-semibold">Free hanbok entry</span>
+        
+        <span class="text-[11px] uppercase tracking-wide text-secondary bg-secondary-container px-2 py-1 rounded-full font-semibold">Iconic</span>
+        
+        <span class="text-[11px] uppercase tracking-wide text-secondary bg-secondary-container px-2 py-1 rounded-full font-semibold">Open until 18:00</span>
+        
+      </div>
+    </div>
+  </article>
+  
+  <article class="group bg-surface-container-low rounded-2xl overflow-hidden border border-outline-variant/40 shadow-sm hover:shadow-md transition fade-in">
+    <div class="relative h-48 overflow-hidden">
+      <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="/static/images/n-seoul-tower.jpg" alt="N Seoul Tower" />
+      <span class="absolute top-3 left-3 bg-surface/85 backdrop-blur-md text-primary text-xs font-semibold px-3 py-1 rounded-full">Lookout</span>
+    </div>
+    <div class="p-5">
+      <h3 class="font-headline-md text-lg text-primary mb-1">N Seoul Tower</h3>
+      <p class="font-body-md text-on-surface-variant text-sm mb-3">Iconic Namsan tower with 360° city views. Best at sunset; cable car or hike.</p>
+      <div class="flex flex-wrap gap-2">
+        
+        <span class="text-[11px] uppercase tracking-wide text-secondary bg-secondary-container px-2 py-1 rounded-full font-semibold">Sunset</span>
+        
+        <span class="text-[11px] uppercase tracking-wide text-secondary bg-secondary-container px-2 py-1 rounded-full font-semibold">Cable car</span>
+        
+        <span class="text-[11px] uppercase tracking-wide text-secondary bg-secondary-container px-2 py-1 rounded-full font-semibold">Romantic</span>
+        
+      </div>
+    </div>
+  </article>
+  
+  <article class="group bg-surface-container-low rounded-2xl overflow-hidden border border-outline-variant/40 shadow-sm hover:shadow-md transition fade-in">
+    <div class="relative h-48 overflow-hidden">
+      <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="/static/images/bukchon.jpg" alt="Bukchon Hanok Village" />
+      <span class="absolute top-3 left-3 bg-surface/85 backdrop-blur-md text-primary text-xs font-semibold px-3 py-1 rounded-full">Neighborhood</span>
+    </div>
+    <div class="p-5">
+      <h3 class="font-headline-md text-lg text-primary mb-1">Bukchon Hanok Village</h3>
+      <p class="font-body-md text-on-surface-variant text-sm mb-3">Preserved hanok houses between Gyeongbokgung and Changdeokgung — quiet alleys and city views.</p>
+      <div class="flex flex-wrap gap-2">
+        
+        <span class="text-[11px] uppercase tracking-wide text-secondary bg-secondary-container px-2 py-1 rounded-full font-semibold">Photo spot</span>
+        
+        <span class="text-[11px] uppercase tracking-wide text-secondary bg-secondary-container px-2 py-1 rounded-full font-semibold">Walk</span>
+        
+        <span class="text-[11px] uppercase tracking-wide text-secondary bg-secondary-container px-2 py-1 rounded-full font-semibold">Free</span>
+        
+      </div>
+    </div>
+  </article>
+  
+  <article class="group bg-surface-container-low rounded-2xl overflow-hidden border border-outline-variant/40 shadow-sm hover:shadow-md transition fade-in">
+    <div class="relative h-48 overflow-hidden">
+      <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="/static/images/lotte-world.jpg" alt="Lotte World" />
+      <span class="absolute top-3 left-3 bg-surface/85 backdrop-blur-md text-primary text-xs font-semibold px-3 py-1 rounded-full">Theme park</span>
+    </div>
+    <div class="p-5">
+      <h3 class="font-headline-md text-lg text-primary mb-1">Lotte World</h3>
+      <p class="font-body-md text-on-surface-variant text-sm mb-3">Indoor + outdoor theme park, folk museum and aquarium at Jamsil — book Klook to skip queues.</p>
+      <div class="flex flex-wrap gap-2">
+        
+        <span class="text-[11px] uppercase tracking-wide text-secondary bg-secondary-container px-2 py-1 rounded-full font-semibold">Family</span>
+        
+        <span class="text-[11px] uppercase tracking-wide text-secondary bg-secondary-container px-2 py-1 rounded-full font-semibold">All-day</span>
+        
+        <span class="text-[11px] uppercase tracking-wide text-secondary bg-secondary-container px-2 py-1 rounded-full font-semibold">Klook</span>
+        
+      </div>
+    </div>
+  </article>
+  
+  <article class="group bg-surface-container-low rounded-2xl overflow-hidden border border-outline-variant/40 shadow-sm hover:shadow-md transition fade-in">
+    <div class="relative h-48 overflow-hidden">
+      <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="/static/images/nami-island.jpg" alt="Nami Island" />
+      <span class="absolute top-3 left-3 bg-surface/85 backdrop-blur-md text-primary text-xs font-semibold px-3 py-1 rounded-full">Day trip</span>
+    </div>
+    <div class="p-5">
+      <h3 class="font-headline-md text-lg text-primary mb-1">Nami Island</h3>
+      <p class="font-body-md text-on-surface-variant text-sm mb-3">Tree-lined paths and lakes north of Seoul — ITX-Saemaeul to Gapyeong, then a 10-min taxi to the ferry.</p>
+      <div class="flex flex-wrap gap-2">
+        
+        <span class="text-[11px] uppercase tracking-wide text-secondary bg-secondary-container px-2 py-1 rounded-full font-semibold">Nature</span>
+        
+        <span class="text-[11px] uppercase tracking-wide text-secondary bg-secondary-container px-2 py-1 rounded-full font-semibold">Ferry</span>
+        
+        <span class="text-[11px] uppercase tracking-wide text-secondary bg-secondary-container px-2 py-1 rounded-full font-semibold">Day trip</span>
+        
+      </div>
+    </div>
+  </article>
+  
+  <article class="group bg-surface-container-low rounded-2xl overflow-hidden border border-outline-variant/40 shadow-sm hover:shadow-md transition fade-in">
+    <div class="relative h-48 overflow-hidden">
+      <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="/static/images/myeongdong.jpg" alt="Myeongdong Street Food" />
+      <span class="absolute top-3 left-3 bg-surface/85 backdrop-blur-md text-primary text-xs font-semibold px-3 py-1 rounded-full">Food street</span>
+    </div>
+    <div class="p-5">
+      <h3 class="font-headline-md text-lg text-primary mb-1">Myeongdong Street Food</h3>
+      <p class="font-body-md text-on-surface-variant text-sm mb-3">Pulsing night-market lanes of tornado potatoes, hotteok, fried chicken and skincare hauls.</p>
+      <div class="flex flex-wrap gap-2">
+        
+        <span class="text-[11px] uppercase tracking-wide text-secondary bg-secondary-container px-2 py-1 rounded-full font-semibold">Street food</span>
+        
+        <span class="text-[11px] uppercase tracking-wide text-secondary bg-secondary-container px-2 py-1 rounded-full font-semibold">Evening</span>
+        
+        <span class="text-[11px] uppercase tracking-wide text-secondary bg-secondary-container px-2 py-1 rounded-full font-semibold">Shopping</span>
+        
+      </div>
+    </div>
+  </article>
+  
+  <article class="group bg-surface-container-low rounded-2xl overflow-hidden border border-outline-variant/40 shadow-sm hover:shadow-md transition fade-in">
+    <div class="relative h-48 overflow-hidden">
+      <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="/static/images/korean-food.jpg" alt="Korean BBQ Night" />
+      <span class="absolute top-3 left-3 bg-surface/85 backdrop-blur-md text-primary text-xs font-semibold px-3 py-1 rounded-full">Food experience</span>
+    </div>
+    <div class="p-5">
+      <h3 class="font-headline-md text-lg text-primary mb-1">Korean BBQ Night</h3>
+      <p class="font-body-md text-on-surface-variant text-sm mb-3">Pick a smoke-soaked grill house in Yongsan or Mapo — banchan are free and refillable.</p>
+      <div class="flex flex-wrap gap-2">
+        
+        <span class="text-[11px] uppercase tracking-wide text-secondary bg-secondary-container px-2 py-1 rounded-full font-semibold">Dinner</span>
+        
+        <span class="text-[11px] uppercase tracking-wide text-secondary bg-secondary-container px-2 py-1 rounded-full font-semibold">Local</span>
+        
+        <span class="text-[11px] uppercase tracking-wide text-secondary bg-secondary-container px-2 py-1 rounded-full font-semibold">BBQ</span>
+        
+      </div>
+    </div>
+  </article>
+  
+  <article class="group bg-surface-container-low rounded-2xl overflow-hidden border border-outline-variant/40 shadow-sm hover:shadow-md transition fade-in">
+    <div class="relative h-48 overflow-hidden">
+      <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="/static/images/seoul-skyline.jpg" alt="Seoul Skyline at Dusk" />
+      <span class="absolute top-3 left-3 bg-surface/85 backdrop-blur-md text-primary text-xs font-semibold px-3 py-1 rounded-full">City view</span>
+    </div>
+    <div class="p-5">
+      <h3 class="font-headline-md text-lg text-primary mb-1">Seoul Skyline at Dusk</h3>
+      <p class="font-body-md text-on-surface-variant text-sm mb-3">From Namsan to Hangang, the city glows pink and blue — climb a tower or hop a Han River cruise.</p>
+      <div class="flex flex-wrap gap-2">
+        
+        <span class="text-[11px] uppercase tracking-wide text-secondary bg-secondary-container px-2 py-1 rounded-full font-semibold">Sunset</span>
+        
+        <span class="text-[11px] uppercase tracking-wide text-secondary bg-secondary-container px-2 py-1 rounded-full font-semibold">Photo spot</span>
+        
+        <span class="text-[11px] uppercase tracking-wide text-secondary bg-secondary-container px-2 py-1 rounded-full font-semibold">Free</span>
+        
+      </div>
+    </div>
+  </article>
+  
+</section>
+
+<section class="rounded-2xl overflow-hidden bg-primary text-on-primary p-6 sm:p-8">
+  <div class="flex flex-col md:flex-row md:items-center gap-6">
+    <span class="material-symbols-outlined text-secondary-fixed-dim text-[48px]" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+    <div class="flex-1">
+      <h2 class="font-headline-md text-headline-md mb-2">Try at least one of each</h2>
+      <p class="text-white/85 font-body-md">Korean BBQ · Tteokbokki · Bibimbap · Kalguksu · Bingsu · Hotteok · Korean fried chicken · Cold buckwheat noodles (naengmyeon)</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="fixed bottom-0 left-0 right-0 z-50 flex justify-around items-center px-3 py-2 bg-surface/85 backdrop-blur-xl border-t border-white/20 shadow-[0_-4px_20px_0_rgba(10,17,40,0.06)] rounded-t-2xl">
+  
+    
+    <a href="/" class="flex flex-col items-center justify-center min-w-[56px] py-2 px-3 rounded-full transition-all duration-200
+              text-on-surface-variant hover:text-primary active:scale-90">
+      <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 0;">home</span>
+      <span class="text-[11px] font-semibold tracking-wide mt-0.5">Home</span>
+    </a>
+  
+    
+    <a href="/itinerary" class="flex flex-col items-center justify-center min-w-[56px] py-2 px-3 rounded-full transition-all duration-200
+              text-on-surface-variant hover:text-primary active:scale-90">
+      <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 0;">event_note</span>
+      <span class="text-[11px] font-semibold tracking-wide mt-0.5">Itinerary</span>
+    </a>
+  
+    
+    <a href="/flights" class="flex flex-col items-center justify-center min-w-[56px] py-2 px-3 rounded-full transition-all duration-200
+              text-on-surface-variant hover:text-primary active:scale-90">
+      <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 0;">flight_takeoff</span>
+      <span class="text-[11px] font-semibold tracking-wide mt-0.5">Flights</span>
+    </a>
+  
+    
+    <a href="/hotels" class="flex flex-col items-center justify-center min-w-[56px] py-2 px-3 rounded-full transition-all duration-200
+              text-on-surface-variant hover:text-primary active:scale-90">
+      <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 0;">hotel</span>
+      <span class="text-[11px] font-semibold tracking-wide mt-0.5">Hotel</span>
+    </a>
+  
+    
+    <a href="/discover" class="flex flex-col items-center justify-center min-w-[56px] py-2 px-3 rounded-full transition-all duration-200
+              bg-primary text-on-primary">
+      <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">explore</span>
+      <span class="text-[11px] font-semibold tracking-wide mt-0.5">Discover</span>
+    </a>
+  
+</nav>
+
+</div>
+<script>window.KOREA_TRIP_GATE={password:"54321pat",storageKey:"korea_trip_gate_ok_v1"};</script>
+<script src="/static/js/app.js"></script>
+
+</body>
+</html>

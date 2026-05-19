@@ -1,0 +1,13 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/itinerary", "destination": "/itinerary/index.html" },
+    { "source": "/itinerary/:day", "destination": "/itinerary/:day/index.html" },
+    { "source": "/flights", "destination": "/flights/index.html" },
+    { "source": "/hotels", "destination": "/hotels/index.html" },
+    { "source": "/discover", "destination": "/discover/index.html" },
+    { "source": "/tips", "destination": "/tips/index.html" },
+    { "source": "/translator", "destination": "/translator/index.html" }
+  ]
+}

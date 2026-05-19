@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Trip Dashboard · Seoul 2026</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
+<link rel="stylesheet" href="/static/css/style.css" />
+<style>
+  .gate-hidden { display:none !important; }
+  .password-gate {
+    position: fixed; inset: 0; z-index: 1000; display:flex; align-items:center; justify-content:center;
+    background: linear-gradient(135deg, rgba(10,17,40,.92), rgba(157,77,107,.88)); padding: 24px;
+  }
+</style>
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "background": "#fcf8fb",
+        "surface": "#fcf8fb",
+        "surface-bright": "#fcf8fb",
+        "surface-dim": "#dcd9db",
+        "surface-container-lowest": "#ffffff",
+        "surface-container-low": "#f6f3f5",
+        "surface-container": "#f0edef",
+        "surface-container-high": "#eae7ea",
+        "surface-container-highest": "#e5e2e4",
+        "on-surface": "#1b1b1d",
+        "on-surface-variant": "#46464d",
+        "outline": "#76767e",
+        "outline-variant": "#c6c6ce",
+        "primary": "#0a1128",
+        "primary-container": "#141a32",
+        "on-primary": "#ffffff",
+        "on-primary-container": "#bfc5e4",
+        "primary-fixed": "#dce1ff",
+        "primary-fixed-dim": "#bfc5e4",
+        "on-primary-fixed": "#141a32",
+        "on-primary-fixed-variant": "#3f465f",
+        "secondary": "#9d4d6b",
+        "secondary-container": "#fce7f3",
+        "on-secondary": "#ffffff",
+        "on-secondary-container": "#6e5e68",
+        "secondary-fixed": "#fce7f3",
+        "secondary-fixed-dim": "#f1c6db",
+        "on-secondary-fixed": "#231820",
+        "tertiary": "#000000",
+        "tertiary-container": "#2c1603",
+        "tertiary-fixed": "#ffdcc3",
+        "tertiary-fixed-dim": "#e8be9f",
+        "on-tertiary": "#ffffff",
+        "on-tertiary-container": "#a17d61",
+        "on-tertiary-fixed": "#2c1603",
+        "error": "#ba1a1a",
+        "error-container": "#ffdad6",
+        "on-error": "#ffffff",
+        "on-error-container": "#93000a",
+        "inverse-surface": "#303032",
+        "inverse-on-surface": "#f3f0f2",
+        "inverse-primary": "#bfc5e4"
+      },
+      borderRadius: {
+        DEFAULT: "0.25rem",
+        lg: "0.5rem",
+        xl: "0.75rem",
+        "2xl": "1rem",
+        full: "9999px"
+      },
+      spacing: {
+        "container-margin-desktop": "64px",
+        "container-margin-mobile": "20px",
+        "section-gap": "48px",
+        "gutter-md": "16px",
+        "base": "8px"
+      },
+      fontFamily: {
+        "body-md": ["Plus Jakarta Sans", "sans-serif"],
+        "headline-md": ["Plus Jakarta Sans", "sans-serif"],
+        "display-lg": ["Plus Jakarta Sans", "sans-serif"],
+        "headline-lg-mobile": ["Plus Jakarta Sans", "sans-serif"],
+        "body-lg": ["Plus Jakarta Sans", "sans-serif"],
+        "label-sm": ["Plus Jakarta Sans", "sans-serif"],
+        "headline-lg": ["Plus Jakarta Sans", "sans-serif"]
+      },
+      fontSize: {
+        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+        "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
+        "headline-lg-mobile": ["28px", { lineHeight: "36px", fontWeight: "700" }],
+        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+        "label-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "600" }],
+        "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "700" }]
+      }
+    }
+  }
+};
+</script>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen pb-32 antialiased">
+<div id="password-gate" class="password-gate">
+  <div class="w-full max-w-md rounded-3xl bg-white/95 backdrop-blur-xl shadow-2xl border border-white/30 p-7 space-y-5">
+    <div class="space-y-2 text-center">
+      <div class="mx-auto w-14 h-14 rounded-2xl bg-primary text-on-primary flex items-center justify-center">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">lock</span>
+      </div>
+      <h2 class="text-2xl font-bold text-primary">Private Trip Planner</h2>
+      <p class="text-on-surface-variant text-sm">Enter the shared password to view the Korea trip planner.</p>
+    </div>
+    <form id="password-form" class="space-y-3">
+      <input id="password-input" type="password" autocomplete="current-password" placeholder="Password" class="w-full rounded-2xl border border-outline-variant/50 px-4 py-3 text-primary bg-surface-container-low focus:outline-none focus:ring-2 focus:ring-primary/30" />
+      <button type="submit" class="w-full rounded-2xl bg-primary text-on-primary px-4 py-3 font-semibold hover:opacity-90 active:scale-[0.99] transition">Unlock planner</button>
+      <p id="password-error" class="text-sm text-error text-center min-h-[20px]"></p>
+    </form>
+  </div>
+</div>
+<div id="site-shell" class="gate-hidden">
+
+
+<header class="fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-container-margin-mobile bg-surface/80 backdrop-blur-xl border-b border-white/20 shadow-sm">
+  <div class="flex items-center gap-3">
+    <a href="/" class="flex items-center gap-3 active:scale-95 transition-transform">
+      <div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-on-primary">
+        <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">flight</span>
+      </div>
+      <h1 class="font-display-lg text-headline-md tracking-tight text-primary uppercase">Seoul 2026</h1>
+    </a>
+  </div>
+  <div class="flex items-center gap-2">
+    <a href="/tips" class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container-high active:scale-95 transition" title="Travel Tips">
+      <span class="material-symbols-outlined">tips_and_updates</span>
+    </a>
+    <a href="/translator" class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container-high active:scale-95 transition" title="Korean Translator">
+      <span class="material-symbols-outlined">translate</span>
+    </a>
+  </div>
+</header>
+
+<main class="pt-20 px-container-margin-mobile max-w-7xl mx-auto pb-16 space-y-10">
+  
+<!-- Hero countdown -->
+<section class="relative h-[420px] rounded-2xl overflow-hidden shadow-xl fade-in">
+  <img class="absolute inset-0 w-full h-full object-cover" src="/static/images/seoul-skyline.jpg" alt="Seoul skyline at dusk" />
+  <div class="absolute inset-0 scrim-gradient flex flex-col justify-end p-6 sm:p-8 text-white">
+    <p class="font-label-sm text-label-sm uppercase tracking-widest text-secondary-fixed mb-2">Adventure Awaits</p>
+    <h2 class="font-display-lg text-headline-lg-mobile md:text-display-lg leading-tight mb-1">Seoul Discovery</h2>
+    <p class="font-body-md text-white/80 mb-5">27 May – 2 June 2026 · Patrick Tan, Sylvia Wu, Emily Tan</p>
+
+    <div id="countdown" data-target="2026-05-27T08:10:00+08:00" class="flex gap-3 items-end flex-wrap">
+      
+      <div class="glass-card rounded-xl px-4 py-3 text-center min-w-[72px]">
+        <span data-cd="days" class="block font-display-lg text-headline-lg text-primary tabular-nums">00</span>
+        <span class="font-label-sm text-on-surface-variant tracking-wider">DAYS</span>
+      </div>
+      
+      <div class="glass-card rounded-xl px-4 py-3 text-center min-w-[72px]">
+        <span data-cd="hours" class="block font-display-lg text-headline-lg text-primary tabular-nums">00</span>
+        <span class="font-label-sm text-on-surface-variant tracking-wider">HRS</span>
+      </div>
+      
+      <div class="glass-card rounded-xl px-4 py-3 text-center min-w-[72px]">
+        <span data-cd="minutes" class="block font-display-lg text-headline-lg text-primary tabular-nums">00</span>
+        <span class="font-label-sm text-on-surface-variant tracking-wider">MIN</span>
+      </div>
+      
+      <div class="glass-card rounded-xl px-4 py-3 text-center min-w-[72px]">
+        <span data-cd="seconds" class="block font-display-lg text-headline-lg text-primary tabular-nums">00</span>
+        <span class="font-label-sm text-on-surface-variant tracking-wider">SEC</span>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<!-- Bento: next flight + itinerary preview -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter-md">
+  <!-- Flight summary -->
+  <div class="md:col-span-8 bg-surface-container-low rounded-2xl p-6 border border-outline-variant/40 shadow-sm">
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="font-headline-md text-headline-md text-primary">Next Flight</h3>
+      <span class="bg-primary-container text-primary-fixed-dim px-3 py-1 rounded-full font-label-sm">SQ600</span>
+    </div>
+    <div class="flex justify-between items-center relative py-4">
+      <div>
+        <p class="font-display-lg text-headline-lg text-primary">SIN</p>
+        <p class="font-body-md text-on-surface-variant">Singapore</p>
+        <p class="font-label-sm mt-2 text-primary">08:10</p>
+      </div>
+      <div class="flex-grow mx-4 sm:mx-8 flex flex-col items-center relative">
+        <div class="w-full h-[2px] border-t-2 border-dashed border-outline-variant absolute"></div>
+        <span class="material-symbols-outlined text-primary bg-surface-container-low px-2 z-10" style="font-variation-settings: 'FILL' 1;">flight</span>
+        <span class="font-label-sm text-on-surface-variant mt-4">7h 20m</span>
+      </div>
+      <div class="text-right">
+        <p class="font-display-lg text-headline-lg text-primary">ICN</p>
+        <p class="font-body-md text-on-surface-variant">Seoul</p>
+        <p class="font-label-sm mt-2 text-primary">15:30</p>
+      </div>
+    </div>
+    <div class="mt-6 pt-6 border-t border-outline-variant flex flex-wrap gap-4 justify-between items-center">
+      <div class="flex gap-6">
+        <div>
+          <p class="font-label-sm text-on-surface-variant">Date</p>
+          <p class="font-body-md font-semibold text-primary">Wed 27 May 2026</p>
+        </div>
+        <div>
+          <p class="font-label-sm text-on-surface-variant">Aircraft</p>
+          <p class="font-body-md font-semibold text-primary">Boeing 787-10</p>
+        </div>
+        <div>
+          <p class="font-label-sm text-on-surface-variant">Booking</p>
+          <p class="font-body-md font-semibold text-primary">ER7BLK</p>
+        </div>
+      </div>
+      <a href="/flights" class="bg-primary text-on-primary rounded-full px-5 py-2 font-label-sm active:scale-95 transition-transform inline-flex items-center gap-2">
+        Flight Tickets <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Hotel card -->
+  <a href="/hotels" class="md:col-span-4 relative rounded-2xl overflow-hidden shadow-lg group">
+    <img class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="/static/images/hotel.jpg" alt="Novotel Ambassador Seoul Yongsan" />
+    <div class="absolute inset-0 scrim-gradient"></div>
+    <div class="relative p-6 text-white h-full min-h-[260px] flex flex-col justify-end">
+      <span class="material-symbols-outlined text-secondary-fixed-dim text-[28px] mb-2" style="font-variation-settings: 'FILL' 1;">hotel</span>
+      <p class="font-label-sm uppercase tracking-widest text-secondary-fixed mb-1">Your stay</p>
+      <h3 class="font-headline-md text-headline-md mb-1">Novotel Ambassador Seoul Yongsan</h3>
+      <p class="font-body-md text-white/80 text-sm">Seoul Dragon City · 6 nights</p>
+    </div>
+  </a>
+</div>
+
+<!-- Upcoming days -->
+<section>
+  <div class="flex justify-between items-end mb-5">
+    <div>
+      <h2 class="font-headline-lg text-headline-lg text-primary">Upcoming Days</h2>
+      <p class="font-body-md text-on-surface-variant">First moves in Seoul</p>
+    </div>
+    <a href="/itinerary" class="text-primary font-label-sm border-b-2 border-primary pb-1 inline-flex items-center gap-1">Full plan <span class="material-symbols-outlined text-[18px]">arrow_forward</span></a>
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-gutter-md">
+    
+    <a href="/itinerary/1" class="group rounded-2xl overflow-hidden bg-surface-container-low border border-outline-variant/40 shadow-sm hover:shadow-md transition">
+      <div class="relative h-40 overflow-hidden">
+        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="/static/images/seoul-skyline.jpg" alt="Arrival in Seoul" />
+        <div class="absolute inset-0 scrim-gradient-bottom"></div>
+        <div class="absolute top-3 left-3 bg-primary text-on-primary rounded-full px-3 py-1 font-label-sm">Day 1</div>
+      </div>
+      <div class="p-4">
+        <p class="font-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Wed 27 May</p>
+        <h4 class="font-headline-md text-lg text-primary mb-1">Arrival in Seoul</h4>
+        
+        <p class="font-body-md text-sm text-secondary mb-1.5 flex items-center gap-1">
+          <span class="material-symbols-outlined text-[16px]">clear_day</span>
+          24° / 15°
+        </p>
+        
+        <p class="font-body-md text-on-surface-variant text-sm line-clamp-2">Land at Incheon, bus to Dragon City, evening stroll along the Han River.</p>
+      </div>
+    </a>
+    
+    <a href="/itinerary/2" class="group rounded-2xl overflow-hidden bg-surface-container-low border border-outline-variant/40 shadow-sm hover:shadow-md transition">
+      <div class="relative h-40 overflow-hidden">
+        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="/static/images/myeongdong.jpg" alt="Yongsan &amp; Central Seoul" />
+        <div class="absolute inset-0 scrim-gradient-bottom"></div>
+        <div class="absolute top-3 left-3 bg-primary text-on-primary rounded-full px-3 py-1 font-label-sm">Day 2</div>
+      </div>
+      <div class="p-4">
+        <p class="font-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Thu 28 May</p>
+        <h4 class="font-headline-md text-lg text-primary mb-1">Yongsan &amp; Central Seoul</h4>
+        
+        <p class="font-body-md text-sm text-secondary mb-1.5 flex items-center gap-1">
+          <span class="material-symbols-outlined text-[16px]">sunny</span>
+          25° / 16°
+        </p>
+        
+        <p class="font-body-md text-on-surface-variant text-sm line-clamp-2">Free Yongsan walking tour, museums, then Myeongdong shopping and N Seoul Tower.</p>
+      </div>
+    </a>
+    
+    <a href="/itinerary/3" class="group rounded-2xl overflow-hidden bg-surface-container-low border border-outline-variant/40 shadow-sm hover:shadow-md transition">
+      <div class="relative h-40 overflow-hidden">
+        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="/static/images/lotte-world.jpg" alt="Lotte World Day" />
+        <div class="absolute inset-0 scrim-gradient-bottom"></div>
+        <div class="absolute top-3 left-3 bg-primary text-on-primary rounded-full px-3 py-1 font-label-sm">Day 3</div>
+      </div>
+      <div class="p-4">
+        <p class="font-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Fri 29 May</p>
+        <h4 class="font-headline-md text-lg text-primary mb-1">Lotte World Day</h4>
+        
+        <p class="font-body-md text-sm text-secondary mb-1.5 flex items-center gap-1">
+          <span class="material-symbols-outlined text-[16px]">partly_cloudy_day</span>
+          26° / 17°
+        </p>
+        
+        <p class="font-body-md text-on-surface-variant text-sm line-clamp-2">Full day at Lotte World, then Garosu-gil for dinner.</p>
+      </div>
+    </a>
+    
+  </div>
+</section>
+
+<!-- Quick links -->
+<section>
+  <h2 class="font-headline-lg text-headline-lg text-primary mb-5">Quick access</h2>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-gutter-md">
+    
+    <a href="/flights" class="bg-surface-container-low rounded-2xl p-5 border border-outline-variant/40 flex flex-col gap-2 hover:bg-surface-container-high hover:shadow-md transition group">
+      <div class="w-11 h-11 rounded-xl bg-secondary-container text-primary flex items-center justify-center">
+        <span class="material-symbols-outlined">flight_takeoff</span>
+      </div>
+      <h4 class="font-headline-md text-base text-primary">Flights</h4>
+      <p class="font-label-sm text-on-surface-variant">SQ600 · SQ605</p>
+    </a>
+    
+    <a href="/hotels" class="bg-surface-container-low rounded-2xl p-5 border border-outline-variant/40 flex flex-col gap-2 hover:bg-surface-container-high hover:shadow-md transition group">
+      <div class="w-11 h-11 rounded-xl bg-secondary-container text-primary flex items-center justify-center">
+        <span class="material-symbols-outlined">hotel</span>
+      </div>
+      <h4 class="font-headline-md text-base text-primary">Hotel</h4>
+      <p class="font-label-sm text-on-surface-variant">Novotel Yongsan</p>
+    </a>
+    
+    <a href="/discover" class="bg-surface-container-low rounded-2xl p-5 border border-outline-variant/40 flex flex-col gap-2 hover:bg-surface-container-high hover:shadow-md transition group">
+      <div class="w-11 h-11 rounded-xl bg-secondary-container text-primary flex items-center justify-center">
+        <span class="material-symbols-outlined">explore</span>
+      </div>
+      <h4 class="font-headline-md text-base text-primary">Discover</h4>
+      <p class="font-label-sm text-on-surface-variant">Top sights</p>
+    </a>
+    
+    <a href="/translator" class="bg-surface-container-low rounded-2xl p-5 border border-outline-variant/40 flex flex-col gap-2 hover:bg-surface-container-high hover:shadow-md transition group">
+      <div class="w-11 h-11 rounded-xl bg-secondary-container text-primary flex items-center justify-center">
+        <span class="material-symbols-outlined">translate</span>
+      </div>
+      <h4 class="font-headline-md text-base text-primary">Translator</h4>
+      <p class="font-label-sm text-on-surface-variant">Korean phrases</p>
+    </a>
+    
+  </div>
+</section>
+
+<!-- Highlights -->
+<section>
+  <div class="flex justify-between items-end mb-5">
+    <div>
+      <h2 class="font-headline-lg text-headline-lg text-primary">Saved Places</h2>
+      <p class="font-body-md text-on-surface-variant">Your curated Seoul collection</p>
+    </div>
+    <a href="/discover" class="text-primary font-label-sm border-b-2 border-primary pb-1">View all</a>
+  </div>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-gutter-md">
+    
+    <div class="group cursor-pointer">
+      <div class="relative h-48 rounded-2xl overflow-hidden mb-3">
+        <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="/static/images/gyeongbokgung.jpg" alt="Gyeongbokgung Palace" />
+        <div class="absolute top-2 right-2 bg-surface/80 backdrop-blur-md p-1.5 rounded-full">
+          <span class="material-symbols-outlined text-[18px] text-secondary" style="font-variation-settings: 'FILL' 1;">favorite</span>
+        </div>
+      </div>
+      <h4 class="font-body-md font-bold text-primary">Gyeongbokgung Palace</h4>
+      <p class="font-label-sm text-on-surface-variant flex items-center gap-1">
+        <span class="material-symbols-outlined text-[14px]">location_on</span>Historic site
+      </p>
+    </div>
+    
+    <div class="group cursor-pointer">
+      <div class="relative h-48 rounded-2xl overflow-hidden mb-3">
+        <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="/static/images/n-seoul-tower.jpg" alt="N Seoul Tower" />
+        <div class="absolute top-2 right-2 bg-surface/80 backdrop-blur-md p-1.5 rounded-full">
+          <span class="material-symbols-outlined text-[18px] text-secondary" style="font-variation-settings: 'FILL' 1;">favorite</span>
+        </div>
+      </div>
+      <h4 class="font-body-md font-bold text-primary">N Seoul Tower</h4>
+      <p class="font-label-sm text-on-surface-variant flex items-center gap-1">
+        <span class="material-symbols-outlined text-[14px]">location_on</span>Lookout
+      </p>
+    </div>
+    
+    <div class="group cursor-pointer">
+      <div class="relative h-48 rounded-2xl overflow-hidden mb-3">
+        <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="/static/images/bukchon.jpg" alt="Bukchon Hanok Village" />
+        <div class="absolute top-2 right-2 bg-surface/80 backdrop-blur-md p-1.5 rounded-full">
+          <span class="material-symbols-outlined text-[18px] text-secondary" style="font-variation-settings: 'FILL' 1;">favorite</span>
+        </div>
+      </div>
+      <h4 class="font-body-md font-bold text-primary">Bukchon Hanok Village</h4>
+      <p class="font-label-sm text-on-surface-variant flex items-center gap-1">
+        <span class="material-symbols-outlined text-[14px]">location_on</span>Neighborhood
+      </p>
+    </div>
+    
+    <div class="group cursor-pointer">
+      <div class="relative h-48 rounded-2xl overflow-hidden mb-3">
+        <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="/static/images/lotte-world.jpg" alt="Lotte World" />
+        <div class="absolute top-2 right-2 bg-surface/80 backdrop-blur-md p-1.5 rounded-full">
+          <span class="material-symbols-outlined text-[18px] text-secondary" style="font-variation-settings: 'FILL' 1;">favorite</span>
+        </div>
+      </div>
+      <h4 class="font-body-md font-bold text-primary">Lotte World</h4>
+      <p class="font-label-sm text-on-surface-variant flex items-center gap-1">
+        <span class="material-symbols-outlined text-[14px]">location_on</span>Theme park
+      </p>
+    </div>
+    
+  </div>
+</section>
+
+</main>
+
+<nav class="fixed bottom-0 left-0 right-0 z-50 flex justify-around items-center px-3 py-2 bg-surface/85 backdrop-blur-xl border-t border-white/20 shadow-[0_-4px_20px_0_rgba(10,17,40,0.06)] rounded-t-2xl">
+  
+    
+    <a href="/" class="flex flex-col items-center justify-center min-w-[56px] py-2 px-3 rounded-full transition-all duration-200
+              bg-primary text-on-primary">
+      <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">home</span>
+      <span class="text-[11px] font-semibold tracking-wide mt-0.5">Home</span>
+    </a>
+  
+    
+    <a href="/itinerary" class="flex flex-col items-center justify-center min-w-[56px] py-2 px-3 rounded-full transition-all duration-200
+              text-on-surface-variant hover:text-primary active:scale-90">
+      <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 0;">event_note</span>
+      <span class="text-[11px] font-semibold tracking-wide mt-0.5">Itinerary</span>
+    </a>
+  
+    
+    <a href="/flights" class="flex flex-col items-center justify-center min-w-[56px] py-2 px-3 rounded-full transition-all duration-200
+              text-on-surface-variant hover:text-primary active:scale-90">
+      <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 0;">flight_takeoff</span>
+      <span class="text-[11px] font-semibold tracking-wide mt-0.5">Flights</span>
+    </a>
+  
+    
+    <a href="/hotels" class="flex flex-col items-center justify-center min-w-[56px] py-2 px-3 rounded-full transition-all duration-200
+              text-on-surface-variant hover:text-primary active:scale-90">
+      <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 0;">hotel</span>
+      <span class="text-[11px] font-semibold tracking-wide mt-0.5">Hotel</span>
+    </a>
+  
+    
+    <a href="/discover" class="flex flex-col items-center justify-center min-w-[56px] py-2 px-3 rounded-full transition-all duration-200
+              text-on-surface-variant hover:text-primary active:scale-90">
+      <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 0;">explore</span>
+      <span class="text-[11px] font-semibold tracking-wide mt-0.5">Discover</span>
+    </a>
+  
+</nav>
+
+</div>
+<script>window.KOREA_TRIP_GATE={password:"54321pat",storageKey:"korea_trip_gate_ok_v1"};</script>
+<script src="/static/js/app.js"></script>
+
+</body>
+</html>
